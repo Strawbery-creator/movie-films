@@ -1,0 +1,146 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
+import { getPosterUrl, Movie } from '@/lib/tmdb'
+import MovieFilters, { FilterState } from '@/components/MovieFilters'
+
+function MovieCard({ movie }: { movie: Movie }) {
+  return (
+    <Link href={`/movie/${movie.id}`} className="group">
+      <div className="relative aspect-[2/3] rounded-lg overflow-hidden bg-gray-800 mb-2">
+        <Image
+          src={getPosterUrl(movie.poster_path)}
+          alt={movie.title}
+          fill
+          className="object-cover group-hover:scale-105 transition-transform duration-300"
+          sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+          unoptimized={movie.poster_path === null}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+          <div className="absolute bottom-0 left-0 right-0 p-4">
+            <p className="text-sm font-semibold line-clamp-2">{movie.title}</p>
+            {movie.vote_average !== undefined && movie.vote_average !== null && (
+              <p className="text-xs text-gray-300 mt-1">⭐ {movie.vote_average.toFixed(1)}</p>
+            )}
+            {movie.release_date && (
+              <p className="text-xs text-gray-400 mt-1">{new Date(movie.release_date).getFullYear()}</p>
+            )}
+          </div>
+        </div>
+      </div>
+      <div className="px-1">
+        <p className="text-white font-semibold text-sm line-clamp-1 group-hover:text-primary-400 transition">
+          {movie.title}
+        </p>
+        {movie.release_date && (
+          <p className="text-gray-400 text-xs mt-1">{new Date(movie.release_date).getFullYear()}</p>
+        )}
+      </div>
+    </Link>
+  )
+}
+
+export default function MoviesPage() {
+  const [movies, setMovies] = useState<Movie[]>([])
+  const [genres, setGenres] = useState<{ id: number; name: string }[]>([])
+  const [loading, setLoading] = useState(true)
+  const [filters, setFilters] = useState<FilterState>({
+    sortBy: 'popularity.desc',
+    selectedGenres: [],
+    releaseDateFrom: '',
+    releaseDateTo: '',
+    minRating: 0,
+    minVotes: 0,
+    runtimeMin: 0,
+    runtimeMax: 300,
+  })
+
+  useEffect(() => {
+    async function loadGenres() {
+      try {
+        const response = await fetch('/api/genres/movie')
+        const data = await response.json()
+        setGenres(data.genres || [])
+      } catch (error) {
+        console.error('Türler yüklenemedi:', error)
+      }
+    }
+    loadGenres()
+  }, [])
+
+  useEffect(() => {
+    async function loadMovies() {
+      setLoading(true)
+      try {
+        const params = new URLSearchParams()
+        params.append('page', '1')
+        params.append('sort_by', filters.sortBy)
+        if (filters.selectedGenres.length > 0) {
+          params.append('with_genres', filters.selectedGenres.join(','))
+        }
+        if (filters.releaseDateFrom) {
+          params.append('primary_release_date.gte', filters.releaseDateFrom)
+        }
+        if (filters.releaseDateTo) {
+          params.append('primary_release_date.lte', filters.releaseDateTo)
+        }
+        if (filters.minRating > 0) {
+          params.append('vote_average.gte', filters.minRating.toString())
+        }
+        if (filters.minVotes > 0) {
+          params.append('vote_count.gte', filters.minVotes.toString())
+        }
+        if (filters.runtimeMin > 0) {
+          params.append('with_runtime.gte', filters.runtimeMin.toString())
+        }
+        if (filters.runtimeMax < 300) {
+          params.append('with_runtime.lte', filters.runtimeMax.toString())
+        }
+
+        const response = await fetch(`/api/discover/movie?${params.toString()}`)
+        const data = await response.json()
+        setMovies(data.results || [])
+      } catch (error) {
+        console.error('Filmler yüklenemedi:', error)
+        setMovies([])
+      } finally {
+        setLoading(false)
+      }
+    }
+    loadMovies()
+  }, [filters])
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-4xl font-bold mb-8">Filmler</h1>
+
+      <div className="flex flex-col md:flex-row gap-8">
+        {/* Filters Sidebar */}
+        {genres.length > 0 && (
+          <MovieFilters genres={genres} onFilterChange={setFilters} />
+        )}
+
+        {/* Movies Grid */}
+        <div className="flex-1">
+          {loading ? (
+            <div className="text-center py-12">
+              <p className="text-gray-400">Yükleniyor...</p>
+            </div>
+          ) : movies.length > 0 ? (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+              {movies.map((movie) => (
+                <MovieCard key={movie.id} movie={movie} />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-gray-400 text-xl">Film bulunamadı.</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
