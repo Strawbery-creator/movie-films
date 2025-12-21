@@ -1,12 +1,13 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, use } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { getPersonDetails, getPersonCredits, getProfileUrl, getPosterUrl, PersonDetails, PersonCredits } from '@/lib/tmdb'
 
-export default function PersonDetailPage({ params }: { params: { id: string } }) {
+export default function PersonDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
   const router = useRouter()
   const [person, setPerson] = useState<PersonDetails | null>(null)
   const [credits, setCredits] = useState<PersonCredits | null>(null)
@@ -17,8 +18,8 @@ export default function PersonDetailPage({ params }: { params: { id: string } })
     async function fetchData() {
       try {
         const [personData, creditsData] = await Promise.all([
-          fetch(`/api/person/${params.id}`).then(res => res.json()),
-          fetch(`/api/person/${params.id}/credits`).then(res => res.json())
+          fetch(`/api/person/${id}`).then(res => res.json()),
+          fetch(`/api/person/${id}/credits`).then(res => res.json())
         ]);
         setPerson(personData)
         setCredits(creditsData)
@@ -29,7 +30,7 @@ export default function PersonDetailPage({ params }: { params: { id: string } })
       }
     }
     fetchData()
-  }, [params.id])
+  }, [id])
 
   if (loading) {
     return (
