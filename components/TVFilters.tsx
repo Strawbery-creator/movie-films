@@ -109,6 +109,11 @@ export default function TVFilters({ genres, onFilterChange, variant = 'green' }:
   })
   const filterRef = useRef<HTMLDivElement>(null)
 
+  // Initialize filters on mount
+  useEffect(() => {
+    onFilterChange(filters)
+  }, [])
+
   // Close dropdowns when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {

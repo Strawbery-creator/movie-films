@@ -12,6 +12,7 @@ export interface Movie {
   vote_average: number;
   vote_count: number;
   genre_ids?: number[];
+  popularity?: number;
 }
 
 export interface TVShow {
@@ -24,6 +25,7 @@ export interface TVShow {
   vote_average: number;
   vote_count: number;
   genre_ids?: number[];
+  popularity?: number;
 }
 
 export interface MovieDetails extends Movie {
@@ -104,6 +106,13 @@ export interface PersonTVCredit {
 export interface PersonCredits {
   cast: (PersonMovieCredit | PersonTVCredit)[];
   crew: (PersonMovieCredit | PersonTVCredit)[];
+}
+
+export interface WatchProvider {
+  provider_id: number;
+  provider_name: string;
+  logo_path: string | null;
+  display_priority: number;
 }
 
 // API istekleri için yardımcı fonksiyon
@@ -201,6 +210,36 @@ export async function getMovieCredits(id: number): Promise<Credits> {
 // TV dizisi cast ve crew bilgilerini getir
 export async function getTVShowCredits(id: number): Promise<Credits> {
   return await fetchFromTMDB(`/tv/${id}/credits`);
+}
+
+// Film watch providers bilgilerini getir (Türkiye bölgesi)
+export async function getMovieWatchProviders(id: number): Promise<WatchProvider[]> {
+  try {
+    const data = await fetchFromTMDB(`/movie/${id}/watch/providers`);
+    // Türkiye (TR) bölgesi için flatrate (streaming) provider'ları döndür
+    if (data.results && data.results.TR && data.results.TR.flatrate) {
+      return data.results.TR.flatrate;
+    }
+    return [];
+  } catch (error) {
+    console.error('Watch providers yüklenemedi:', error);
+    return [];
+  }
+}
+
+// TV dizisi watch providers bilgilerini getir (Türkiye bölgesi)
+export async function getTVWatchProviders(id: number): Promise<WatchProvider[]> {
+  try {
+    const data = await fetchFromTMDB(`/tv/${id}/watch/providers`);
+    // Türkiye (TR) bölgesi için flatrate (streaming) provider'ları döndür
+    if (data.results && data.results.TR && data.results.TR.flatrate) {
+      return data.results.TR.flatrate;
+    }
+    return [];
+  } catch (error) {
+    console.error('Watch providers yüklenemedi:', error);
+    return [];
+  }
 }
 
 // Kişi detaylarını getir
@@ -303,5 +342,11 @@ export function getBackdropUrl(backdropPath: string | null, size: 'w300' | 'w780
 export function getProfileUrl(profilePath: string | null, size: 'w45' | 'w185' | 'w300' | 'h632' | 'original' = 'w185'): string {
   if (!profilePath) return PLACEHOLDER_POSTER;
   return `${IMAGE_BASE_URL}/${size}${profilePath}`;
+}
+
+// Provider logo URL'i oluştur
+export function getProviderLogoUrl(logoPath: string | null, size: 'w45' | 'w92' | 'w154' | 'w185' | 'w300' | 'w500' | 'original' = 'w45'): string {
+  if (!logoPath) return '';
+  return `${IMAGE_BASE_URL}/${size}${logoPath}`;
 }
 

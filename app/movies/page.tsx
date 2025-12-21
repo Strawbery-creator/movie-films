@@ -100,6 +100,9 @@ export default function MoviesPage() {
         }
 
         const response = await fetch(`/api/discover/movie?${params.toString()}`)
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
         const data = await response.json()
         setMovies(data.results || [])
       } catch (error) {
@@ -113,30 +116,35 @@ export default function MoviesPage() {
   }, [filters])
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-8">Filmler</h1>
+    <div className="min-h-screen bg-gray-900">
+      <div className="container mx-auto px-4 py-8">
+        <div className="mb-6">
+          <h1 className="text-4xl font-bold mb-2 text-white">Filmler</h1>
+          <p className="text-gray-400">Tüm filmleri keşfedin ve filtreleyin</p>
+        </div>
 
-      <div className="flex flex-col md:flex-row gap-8">
-        {/* Filters Sidebar */}
-        {genres.length > 0 && (
-          <MovieFilters genres={genres} onFilterChange={setFilters} />
-        )}
+        {/* Filters at the top */}
+        <MovieFilters genres={genres} onFilterChange={setFilters} />
 
         {/* Movies Grid */}
-        <div className="flex-1">
+        <div className="mt-6">
           {loading ? (
             <div className="text-center py-12">
               <p className="text-gray-400">Yükleniyor...</p>
             </div>
           ) : movies.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-              {movies.map((movie) => (
-                <MovieCard key={movie.id} movie={movie} />
-              ))}
-            </div>
+            <>
+              <p className="text-gray-400 mb-4">{movies.length} film bulundu</p>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+                {movies.map((movie) => (
+                  <MovieCard key={movie.id} movie={movie} />
+                ))}
+              </div>
+            </>
           ) : (
             <div className="text-center py-12">
               <p className="text-gray-400 text-xl">Film bulunamadı.</p>
+              <p className="text-gray-500 text-sm mt-2">Filtreleri değiştirip tekrar deneyin.</p>
             </div>
           )}
         </div>

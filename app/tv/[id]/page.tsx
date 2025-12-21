@@ -1,18 +1,23 @@
-import { getTVShowDetails, getTVShowCredits, getPosterUrl, getBackdropUrl, getProfileUrl, CastMember } from '@/lib/tmdb'
+import { getTVShowDetails, getTVShowCredits, getTVWatchProviders, getPosterUrl, getBackdropUrl } from '@/lib/tmdb'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import CastCarousel from '@/components/CastCarousel'
+import WatchProviders from '@/components/WatchProviders'
 
 export default async function TVDetailPage({ params }: { params: { id: string } }) {
   let tvShow;
   let credits;
+  let watchProviders;
   try {
-    const [tvShowData, creditsData] = await Promise.all([
+    const [tvShowData, creditsData, providersData] = await Promise.all([
       getTVShowDetails(parseInt(params.id)),
-      getTVShowCredits(parseInt(params.id))
+      getTVShowCredits(parseInt(params.id)),
+      getTVWatchProviders(parseInt(params.id))
     ]);
     tvShow = tvShowData;
     credits = creditsData;
+    watchProviders = providersData;
   } catch (error) {
     notFound();
   }
@@ -30,7 +35,7 @@ export default async function TVDetailPage({ params }: { params: { id: string } 
           className="object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-900/90 to-gray-900" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-900/40 to-gray-900/80" />
         <div className="absolute top-0 left-0 right-0 p-6">
           <div className="container mx-auto">
             <Link 
@@ -113,44 +118,22 @@ export default async function TVDetailPage({ params }: { params: { id: string } 
                 </div>
               </div>
             )}
+
+            {/* Watch Providers */}
+            {watchProviders && watchProviders.length > 0 && (
+              <WatchProviders 
+                providers={watchProviders} 
+                contentId={tvShow.id}
+                contentType="tv"
+                contentTitle={tvShow.name}
+              />
+            )}
           </div>
         </div>
 
         {/* Top Billed Cast */}
         {credits && credits.cast && credits.cast.length > 0 && (
-          <div className="mt-12 bg-white rounded-lg p-6 md:p-8">
-            <h2 className="text-3xl font-bold mb-6 text-gray-900">Başrol Oyuncuları</h2>
-            <div className="overflow-x-auto scrollbar-hide pb-4">
-              <div className="flex gap-4" style={{ width: 'max-content' }}>
-                {credits.cast.slice(0, 12).map((actor: CastMember) => (
-                  <div key={actor.id} className="flex-shrink-0 w-36 md:w-40 group">
-                    <Link href={`/person/${actor.id}`} className="block">
-                      <div className="relative aspect-[2/3] rounded-lg overflow-hidden bg-gray-200 mb-2 shadow-lg">
-                        <Image
-                          src={getProfileUrl(actor.profile_path, 'w185')}
-                          alt={actor.name}
-                          fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-300"
-                          sizes="(max-width: 768px) 144px, 160px"
-                          unoptimized={actor.profile_path === null}
-                        />
-                      </div>
-                      <div className="px-1">
-                        <p className="text-gray-900 font-semibold text-sm line-clamp-1 group-hover:text-primary-600 transition">
-                          {actor.name}
-                        </p>
-                        {actor.character && (
-                          <p className="text-gray-600 text-xs mt-1 line-clamp-1">
-                            {actor.character}
-                          </p>
-                        )}
-                      </div>
-                    </Link>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+          <CastCarousel cast={credits.cast} />
         )}
       </div>
     </div>

@@ -13,7 +13,27 @@ interface TrendingCarouselProps {
 export default function TrendingCarousel({ trendingToday, trendingWeek }: TrendingCarouselProps) {
   const [activeTab, setActiveTab] = useState<'day' | 'week'>('day')
   const scrollContainerRef = useRef<HTMLDivElement>(null)
-  const items = activeTab === 'day' ? trendingToday : trendingWeek
+  
+  // Sort by release date - newest first
+  const getItemDateValue = (item: Movie | TVShow): number => {
+    const date = 'release_date' in item ? item.release_date : item.first_air_date
+    if (!date) return 0
+    return new Date(date).getTime()
+  }
+  
+  const sortedToday = [...trendingToday].sort((a, b) => {
+    const dateA = getItemDateValue(a)
+    const dateB = getItemDateValue(b)
+    return dateB - dateA // En yeni en başta
+  })
+  
+  const sortedWeek = [...trendingWeek].sort((a, b) => {
+    const dateA = getItemDateValue(a)
+    const dateB = getItemDateValue(b)
+    return dateB - dateA // En yeni en başta
+  })
+  
+  const items = activeTab === 'day' ? sortedToday : sortedWeek
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
@@ -51,7 +71,7 @@ export default function TrendingCarousel({ trendingToday, trendingWeek }: Trendi
 
   return (
     <section className="mb-12">
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-4 px-4">
         <h2 className="text-3xl font-bold text-white">Trending</h2>
         <div className="flex gap-2 bg-gray-800 rounded-lg p-1">
           <button
@@ -77,7 +97,7 @@ export default function TrendingCarousel({ trendingToday, trendingWeek }: Trendi
         </div>
       </div>
 
-      <div className="relative">
+      <div className="relative px-4">
         {/* Sol Ok Butonu */}
         <button
           onClick={() => scroll('left')}
@@ -131,7 +151,7 @@ export default function TrendingCarousel({ trendingToday, trendingWeek }: Trendi
                       <p className="text-white font-semibold text-sm line-clamp-2 mb-1">
                         {getItemTitle(item)}
                       </p>
-                      <p className="text-gray-300 text-xs">{getItemDate(item)}</p>
+                      <p className="text-gray-200 text-sm font-medium">{getItemDate(item)}</p>
                     </div>
                   </div>
                 </div>
@@ -140,7 +160,7 @@ export default function TrendingCarousel({ trendingToday, trendingWeek }: Trendi
                   <p className="text-white font-semibold text-sm line-clamp-1 group-hover:text-primary-400 transition">
                     {getItemTitle(item)}
                   </p>
-                  <p className="text-gray-400 text-xs mt-1">{getItemDate(item)}</p>
+                  <p className="text-gray-200 dark:text-gray-300 text-sm font-medium mt-1.5">{getItemDate(item)}</p>
                 </div>
               </Link>
             ))}

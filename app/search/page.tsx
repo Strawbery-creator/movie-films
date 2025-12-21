@@ -8,20 +8,38 @@ import { getPosterUrl, Movie, TVShow } from '@/lib/tmdb'
 
 export const dynamic = 'force-dynamic'
 
+type SortOption = 'relevance' | 'year_desc' | 'year_asc' | 'rating_desc' | 'rating_asc' | 'popularity_desc' | 'popularity_asc'
+
+const SORT_OPTIONS: { value: SortOption; label: string }[] = [
+  { value: 'relevance', label: 'İlgili' },
+  { value: 'year_desc', label: 'Yıl (Yeni → Eski)' },
+  { value: 'year_asc', label: 'Yıl (Eski → Yeni)' },
+  { value: 'rating_desc', label: 'Puan (Yüksek → Düşük)' },
+  { value: 'rating_asc', label: 'Puan (Düşük → Yüksek)' },
+  { value: 'popularity_desc', label: 'Popülerlik (Yüksek → Düşük)' },
+  { value: 'popularity_asc', label: 'Popülerlik (Düşük → Yüksek)' },
+]
+
 function SearchContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const initialQuery = searchParams?.get('q') || ''
   const [query, setQuery] = useState(initialQuery)
   const [results, setResults] = useState<(Movie | TVShow)[]>([])
+  const [sortedResults, setSortedResults] = useState<(Movie | TVShow)[]>([])
   const [loading, setLoading] = useState(false)
   const [searched, setSearched] = useState(false)
+  const [sortBy, setSortBy] = useState<SortOption>('relevance')
 
   useEffect(() => {
     if (initialQuery) {
       performSearch(initialQuery)
     }
   }, [initialQuery])
+
+  useEffect(() => {
+    sortResults(results, sortBy)
+  }, [results, sortBy])
 
   const performSearch = async (searchQuery: string) => {
     if (!searchQuery.trim()) return
@@ -31,13 +49,77 @@ function SearchContent() {
     try {
       const response = await fetch(`/api/search?q=${encodeURIComponent(searchQuery)}`)
       const data = await response.json()
-      setResults(data.results || [])
+      const fetchedResults = data.results || []
+      setResults(fetchedResults)
+      sortResults(fetchedResults, sortBy)
     } catch (error) {
       console.error('Arama hatası:', error)
       setResults([])
+      setSortedResults([])
     } finally {
       setLoading(false)
     }
+  }
+
+  const sortResults = (items: (Movie | TVShow)[], sort: SortOption) => {
+    const sorted = [...items]
+    
+    switch (sort) {
+      case 'year_desc':
+        sorted.sort((a, b) => {
+          const dateA = getItemDate(a)
+          const dateB = getItemDate(b)
+          if (!dateA && !dateB) return 0
+          if (!dateA) return 1
+          if (!dateB) return -1
+          return new Date(dateB).getTime() - new Date(dateA).getTime()
+        })
+        break
+      case 'year_asc':
+        sorted.sort((a, b) => {
+          const dateA = getItemDate(a)
+          const dateB = getItemDate(b)
+          if (!dateA && !dateB) return 0
+          if (!dateA) return 1
+          if (!dateB) return -1
+          return new Date(dateA).getTime() - new Date(dateB).getTime()
+        })
+        break
+      case 'rating_desc':
+        sorted.sort((a, b) => {
+          const ratingA = a.vote_average ?? 0
+          const ratingB = b.vote_average ?? 0
+          return ratingB - ratingA
+        })
+        break
+      case 'rating_asc':
+        sorted.sort((a, b) => {
+          const ratingA = a.vote_average ?? 0
+          const ratingB = b.vote_average ?? 0
+          return ratingA - ratingB
+        })
+        break
+      case 'popularity_desc':
+        sorted.sort((a, b) => {
+          const popA = a.popularity ?? 0
+          const popB = b.popularity ?? 0
+          return popB - popA
+        })
+        break
+      case 'popularity_asc':
+        sorted.sort((a, b) => {
+          const popA = a.popularity ?? 0
+          const popB = b.popularity ?? 0
+          return popA - popB
+        })
+        break
+      case 'relevance':
+      default:
+        // Keep original order (TMDB relevance)
+        break
+    }
+    
+    setSortedResults(sorted)
   }
 
   const handleSearch = async (e: React.FormEvent) => {
@@ -67,19 +149,21 @@ function SearchContent() {
     return Math.round(item.vote_average * 10)
   }
 
+  const displayResults = sortedResults.length > 0 ? sortedResults : results
+
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold mb-8 text-white">Arama</h1>
+        <h1 className="text-4xl font-bold mb-8 text-gray-900 dark:text-white">Arama</h1>
         
-        <form onSubmit={handleSearch} className="mb-8">
+        <form onSubmit={handleSearch} className="mb-6">
           <div className="flex gap-4">
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Film, dizi veya kişi ara..."
-              className="flex-1 px-6 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-primary-500"
+              className="flex-1 px-6 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20"
             />
             <button
               type="submit"
@@ -90,24 +174,49 @@ function SearchContent() {
           </div>
         </form>
 
+        {!loading && displayResults.length > 0 && (
+          <div className="mb-6">
+            <div className="flex items-center gap-4 mb-4 flex-wrap">
+              <p className="text-gray-600 dark:text-gray-400 font-medium">{displayResults.length} sonuç bulundu</p>
+                <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Sırala:</span>
+                <div className="flex gap-2 flex-wrap">
+                  {SORT_OPTIONS.map(option => (
+                    <button
+                      key={option.value}
+                      onClick={() => setSortBy(option.value)}
+                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                        sortBy === option.value
+                          ? 'bg-primary-600 text-white shadow-lg scale-105'
+                          : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-primary-400'
+                      }`}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {loading && (
           <div className="text-center py-12">
-            <p className="text-gray-400">Aranıyor...</p>
+            <p className="text-gray-600 dark:text-gray-400">Aranıyor...</p>
           </div>
         )}
 
-        {!loading && searched && results.length === 0 && (
+        {!loading && searched && displayResults.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-gray-400 text-xl">Sonuç bulunamadı.</p>
-            <p className="text-gray-500 text-sm mt-2">Farklı bir arama terimi deneyin.</p>
+            <p className="text-gray-600 dark:text-gray-400 text-xl">Sonuç bulunamadı.</p>
+            <p className="text-gray-500 dark:text-gray-500 text-sm mt-2">Farklı bir arama terimi deneyin.</p>
           </div>
         )}
 
-        {!loading && results.length > 0 && (
+        {!loading && displayResults.length > 0 && (
           <>
-            <p className="text-gray-400 mb-4">{results.length} sonuç bulundu</p>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-              {results.map((item) => (
+              {displayResults.map((item) => (
                 <Link
                   key={item.id}
                   href={getItemUrl(item)}
@@ -139,11 +248,11 @@ function SearchContent() {
                     </div>
                   </div>
                   <div className="px-1">
-                    <p className="text-white font-semibold text-sm line-clamp-1 group-hover:text-primary-400 transition">
+                    <p className="text-gray-900 dark:text-white font-semibold text-sm line-clamp-1 group-hover:text-primary-400 transition">
                       {getItemTitle(item)}
                     </p>
                     {getItemDate(item) && (
-                      <p className="text-gray-400 text-xs mt-1">
+                      <p className="text-gray-500 dark:text-gray-400 text-xs mt-1">
                         {new Date(getItemDate(item) as string).getFullYear()}
                       </p>
                     )}
@@ -160,7 +269,7 @@ function SearchContent() {
 
 export default function SearchPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-gray-900 flex items-center justify-center"><p className="text-gray-400">Yükleniyor...</p></div>}>
+    <Suspense fallback={<div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center"><p className="text-gray-600 dark:text-gray-400">Yükleniyor...</p></div>}>
       <SearchContent />
     </Suspense>
   )
