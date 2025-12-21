@@ -5,15 +5,16 @@ import { notFound } from 'next/navigation'
 import CastCarousel from '@/components/CastCarousel'
 import WatchProviders from '@/components/WatchProviders'
 
-export default async function MovieDetailPage({ params }: { params: { id: string } }) {
+export default async function MovieDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   let movie;
   let credits;
   let watchProviders;
   try {
     const [movieData, creditsData, providersData] = await Promise.all([
-      getMovieDetails(parseInt(params.id)),
-      getMovieCredits(parseInt(params.id)),
-      getMovieWatchProviders(parseInt(params.id))
+      getMovieDetails(parseInt(id)),
+      getMovieCredits(parseInt(id)),
+      getMovieWatchProviders(parseInt(id))
     ]);
     movie = movieData;
     credits = creditsData;
