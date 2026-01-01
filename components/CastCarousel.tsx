@@ -94,3 +94,5 @@ export default function CastCarousel({ cast, title = 'Başrol Oyuncuları' }: Ca
   )
 }
 
+
+
