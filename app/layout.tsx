@@ -21,6 +21,10 @@ export default function RootLayout({
           <nav className="bg-white dark:bg-gradient-to-r dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 shadow-lg">
             <div className="container mx-auto px-4 py-3">
               <div className="flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4">
+                {/* Hamburger Menu - Sadece mobilde görünür, logonun solunda */}
+                <div className="md:hidden">
+                  <MobileMenu />
+                </div>
                 <a href="/" className="flex items-center gap-3 text-xl md:text-2xl font-bold transition whitespace-nowrap group relative z-50 hover:opacity-90">
                   <div className="relative z-50">
                     {/* Modern Premium DİZİYOO Logo - Clean & Professional Design */}
@@ -85,8 +89,6 @@ export default function RootLayout({
                   <div className="hidden md:block">
                     <ThemeToggle />
                   </div>
-                  {/* Mobile Menu - Sadece mobilde görünür */}
-                  <MobileMenu />
                 </div>
               </div>
             </div>

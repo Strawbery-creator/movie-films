@@ -34,13 +34,13 @@ export default function MobileMenu() {
           onClick={closeMenu}
         >
           <div
-            className="absolute top-0 right-0 h-full w-80 bg-white dark:bg-gray-900 shadow-xl transform transition-transform duration-300"
+            className="absolute top-0 left-0 h-full w-1/2 bg-white dark:bg-gray-900 shadow-xl transform transition-transform duration-300"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex flex-col h-full">
               {/* Menu Header */}
               <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-                <h2 className="text-xl font-bold text-gray-900 dark:text-white">Menü</h2>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Menü</h2>
                 <button
                   onClick={closeMenu}
                   className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
@@ -58,35 +58,35 @@ export default function MobileMenu() {
                   <a
                     href="/"
                     onClick={closeMenu}
-                    className="px-4 py-3 rounded-lg text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors font-medium"
+                    className="px-4 py-3 rounded-lg text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors font-semibold text-lg"
                   >
                     Ana Sayfa
                   </a>
                   <a
                     href="/movies"
                     onClick={closeMenu}
-                    className="px-4 py-3 rounded-lg text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors font-medium"
+                    className="px-4 py-3 rounded-lg text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors font-semibold text-lg"
                   >
                     Filmler
                   </a>
                   <a
                     href="/tv"
                     onClick={closeMenu}
-                    className="px-4 py-3 rounded-lg text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors font-medium"
+                    className="px-4 py-3 rounded-lg text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors font-semibold text-lg"
                   >
                     Diziler
                   </a>
                   <a
                     href="/tv/on-the-air"
                     onClick={closeMenu}
-                    className="px-4 py-3 rounded-lg text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors font-medium"
+                    className="px-4 py-3 rounded-lg text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors font-semibold text-lg"
                   >
                     Yayında
                   </a>
                   <a
                     href="/yayin-akisi"
                     onClick={closeMenu}
-                    className="px-4 py-3 rounded-lg text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors font-medium"
+                    className="px-4 py-3 rounded-lg text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors font-semibold text-lg"
                   >
                     Yayın Akışı
                   </a>
@@ -96,7 +96,7 @@ export default function MobileMenu() {
               {/* Theme Toggle in Menu */}
               <div className="p-4 border-t border-gray-200 dark:border-gray-700">
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-900 dark:text-white font-medium">Tema</span>
+                  <span className="text-gray-900 dark:text-white font-semibold text-lg">Tema</span>
                   <ThemeToggle />
                 </div>
               </div>
