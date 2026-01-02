@@ -241,11 +241,18 @@ export default function LatestTrailers() {
       {selectedTrailer && selectedTrailer.trailer_key && (
         <div
           className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-0"
-          onClick={closeTrailer}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              closeTrailer();
+            }
+          }}
         >
           <div className="relative w-full h-full max-w-[95vw] max-h-[95vh] aspect-video bg-black overflow-hidden">
             <button
-              onClick={closeTrailer}
+              onClick={(e) => {
+                e.stopPropagation();
+                closeTrailer();
+              }}
               className="absolute top-4 right-4 z-10 w-10 h-10 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center transition-colors"
             >
               <svg

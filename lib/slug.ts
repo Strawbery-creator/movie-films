@@ -16,6 +16,12 @@ function turkishToEnglish(text: string): string {
 
 // Başlıktan SEO-friendly slug oluştur
 export function createSlug(title: string, type: 'movie' | 'tv'): string {
+  // Boş veya geçersiz title kontrolü
+  if (!title || typeof title !== 'string' || title.trim() === '') {
+    console.error('createSlug: Geçersiz title:', title);
+    return type === 'movie' ? 'film-hangi-platformda' : 'dizi-hangi-platformda';
+  }
+  
   // Türkçe karakterleri çevir
   let slug = turkishToEnglish(title);
   
@@ -28,7 +34,7 @@ export function createSlug(title: string, type: 'movie' | 'tv'): string {
   // Birden fazla boşluğu tek boşluğa çevir
   slug = slug.replace(/\s+/g, ' ');
   
-  // Boşlukları tire ile değiştir
+  // Trim ve boşlukları tire ile değiştir
   slug = slug.trim().replace(/\s+/g, '-');
   
   // Birden fazla tire'yi tek tire'ye çevir
@@ -36,6 +42,12 @@ export function createSlug(title: string, type: 'movie' | 'tv'): string {
   
   // Başta ve sonda tire varsa kaldır
   slug = slug.replace(/^-+|-+$/g, '');
+  
+  // Eğer slug hala boşsa veya sadece tire içeriyorsa, fallback kullan
+  if (!slug || slug === '' || slug === '-') {
+    console.error('createSlug: Slug oluşturulamadı, fallback kullanılıyor:', { title, slug });
+    return type === 'movie' ? 'film-hangi-platformda' : 'dizi-hangi-platformda';
+  }
   
   // Tip'e göre suffix ekle
   const suffix = type === 'movie' ? '-filmi-hangi-platformda' : '-dizisi-hangi-platformda';

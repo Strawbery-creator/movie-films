@@ -36,7 +36,7 @@ export default function HeroSearchBar() {
           type="submit"
           className="absolute right-2 px-6 py-2.5 bg-gradient-to-r from-teal-400 to-green-400 hover:from-teal-500 hover:to-green-500 text-white font-semibold rounded-full transition-all shadow-md hover:shadow-lg"
         >
-          Search
+          Ara
         </button>
       </div>
     </form>
