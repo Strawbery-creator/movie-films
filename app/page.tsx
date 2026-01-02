@@ -84,7 +84,7 @@ export default async function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero Section - TMDB Style */}
-      <section className="relative bg-gradient-to-br from-gray-100 via-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-20 md:py-24 mb-12 overflow-hidden transition-colors duration-200">
+      <section className="relative bg-gradient-to-br from-gray-100 via-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-16 md:py-20 mb-4 overflow-hidden transition-colors duration-200">
         {/* Background Images Grid */}
         <div className="absolute inset-0 opacity-20">
           <div className="grid grid-cols-4 md:grid-cols-6 gap-2 h-full">
@@ -125,7 +125,7 @@ export default async function Home() {
 
       {/* Trending Carousel - Full width with gray background */}
       {trendingToday.results.length > 0 && trendingWeek.results.length > 0 && (
-        <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-4 mb-12 w-full">
+        <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-3 mb-4 w-full">
           <TrendingCarousel 
             trendingToday={trendingToday.results.slice(0, 20)} 
             trendingWeek={trendingWeek.results.slice(0, 20)} 
@@ -150,7 +150,7 @@ export default async function Home() {
 
         {/* Popüler Filmler */}
         {popularMovies.results.length > 0 && (
-          <section className="mb-12 bg-gradient-to-br from-blue-600 via-cyan-600 to-teal-600 py-8">
+          <section className="mb-4 bg-gradient-to-br from-blue-600 via-cyan-600 to-teal-600 py-4">
             <div className="container mx-auto px-4">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-3xl font-bold text-white drop-shadow-lg">Popüler Filmler</h2>
@@ -169,7 +169,7 @@ export default async function Home() {
 
         {/* En Yüksek Puanlı Filmler */}
         {topRatedMovies.results.length > 0 && (
-          <section className="mb-12 bg-gradient-to-br from-amber-600 via-yellow-600 to-orange-500 py-8">
+          <section className="mb-4 bg-gradient-to-br from-amber-600 via-yellow-600 to-orange-500 py-4">
             <div className="container mx-auto px-4">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-3xl font-bold text-white drop-shadow-lg">
@@ -191,7 +191,7 @@ export default async function Home() {
 
         {/* Popüler Diziler */}
         {popularTVShows.results.length > 0 && (
-          <section className="mb-12 bg-gradient-to-br from-emerald-600 via-green-600 to-lime-600 py-8">
+          <section className="mb-4 bg-gradient-to-br from-emerald-600 via-green-600 to-lime-600 py-4">
             <div className="container mx-auto px-4">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-3xl font-bold text-white drop-shadow-lg">Popüler Diziler</h2>
@@ -210,7 +210,7 @@ export default async function Home() {
 
         {/* En Yüksek Puanlı Diziler */}
         {topRatedTVShows.results.length > 0 && (
-          <section className="bg-gradient-to-br from-purple-600 via-violet-600 to-fuchsia-600 py-8">
+          <section className="bg-gradient-to-br from-purple-600 via-violet-600 to-fuchsia-600 py-4">
             <div className="container mx-auto px-4">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-3xl font-bold text-white drop-shadow-lg">

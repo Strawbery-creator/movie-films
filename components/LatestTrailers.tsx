@@ -94,7 +94,7 @@ export default function LatestTrailers() {
 
   return (
     <>
-      <section className="mb-12 bg-gradient-to-br from-orange-600 via-red-600 to-pink-600 py-8 w-full">
+      <section className="mb-4 bg-gradient-to-br from-orange-600 via-red-600 to-pink-600 py-4 w-full">
         <div className="w-full px-6 md:px-8">
           <div className="mb-6">
             <h2 className="text-3xl md:text-4xl font-bold text-white">Son Fragmanlar</h2>
@@ -156,59 +156,38 @@ export default function LatestTrailers() {
                   return (
                     <div
                       key={`${trailer.media_type}-${trailer.id}`}
-                      className="flex-shrink-0 w-64 md:w-80 group"
+                      className="flex-shrink-0 w-[92vw] md:w-80 group"
                     >
-                      <div className={`relative ${aspectRatio} rounded-lg overflow-hidden bg-gray-800 mb-3`}>
-                        <Image
-                          src={imageUrl}
-                          alt={trailer.title}
-                          fill
-                          className="object-cover pointer-events-none"
-                          sizes="(max-width: 768px) 256px, 320px"
-                          unoptimized={trailer.poster_path === null && trailer.backdrop_path === null}
-                        />
-                        
-                        {/* Play Button Overlay - Tüm karta tıklanabilir */}
-                        {trailer.trailer_key ? (
-                          <button
-                            onClick={() => handlePlayTrailer(trailer)}
-                            className="absolute inset-0 flex items-center justify-center bg-black/30 hover:bg-black/50 transition-colors group/play cursor-pointer z-10"
-                          >
-                            <div className="w-16 h-16 md:w-20 md:h-20 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-lg">
-                              <svg
-                                className="w-8 h-8 md:w-10 md:h-10 text-gray-900 ml-1"
-                                fill="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path d="M8 5v14l11-7z" />
-                              </svg>
-                            </div>
-                          </button>
-                        ) : (
-                          <Link href={url} className="absolute inset-0 flex items-center justify-center bg-black/30 hover:bg-black/50 transition-colors group/play">
-                            <div className="w-16 h-16 md:w-20 md:h-20 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-lg">
-                              <svg
-                                className="w-8 h-8 md:w-10 md:h-10 text-gray-900 ml-1"
-                                fill="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path d="M8 5v14l11-7z" />
-                              </svg>
-                            </div>
-                          </Link>
-                        )}
-
-                        {/* More Options Button */}
-                        <button className="absolute top-2 right-2 w-8 h-8 rounded-full bg-black/60 hover:bg-black/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                          <svg
-                            className="w-5 h-5 text-white"
-                            fill="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
-                          </svg>
+                      {trailer.trailer_key ? (
+                        <button
+                          onClick={() => handlePlayTrailer(trailer)}
+                          className="w-full"
+                        >
+                          <div className={`relative ${aspectRatio} rounded-lg overflow-hidden bg-gray-800 mb-3`}>
+                            <Image
+                              src={imageUrl}
+                              alt={trailer.title}
+                              fill
+                              className="object-cover"
+                              sizes="(max-width: 768px) 92vw, 320px"
+                              unoptimized={trailer.poster_path === null && trailer.backdrop_path === null}
+                            />
+                          </div>
                         </button>
-                      </div>
+                      ) : (
+                        <Link href={url} className="block">
+                          <div className={`relative ${aspectRatio} rounded-lg overflow-hidden bg-gray-800 mb-3`}>
+                            <Image
+                              src={imageUrl}
+                              alt={trailer.title}
+                              fill
+                              className="object-cover"
+                              sizes="(max-width: 768px) 92vw, 320px"
+                              unoptimized={trailer.poster_path === null && trailer.backdrop_path === null}
+                            />
+                          </div>
+                        </Link>
+                      )}
 
                       <Link href={url} className="block">
                         <h3 className="text-white font-semibold text-xl line-clamp-1 group-hover:text-teal-400 transition drop-shadow-lg">

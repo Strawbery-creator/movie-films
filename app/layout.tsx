@@ -20,69 +20,53 @@ export default function RootLayout({
           <nav className="bg-white dark:bg-gradient-to-r dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 shadow-lg">
             <div className="container mx-auto px-4 py-3">
               <div className="flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4">
-                <a href="/" className="flex items-center gap-3 text-xl md:text-2xl font-bold transition whitespace-nowrap group relative z-50">
+                <a href="/" className="flex items-center gap-3 text-xl md:text-2xl font-bold transition whitespace-nowrap group relative z-50 hover:opacity-90">
                   <div className="relative z-50">
-                    {/* Ultra Premium DİZİYOO Logo - Grafiker Tasarımı - Görünür ve Belirgin */}
-                    <svg className="w-16 h-16 md:w-20 md:h-20 transition-all group-hover:scale-110 group-hover:rotate-6 duration-500" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ filter: 'drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3)) drop-shadow(0 0 20px rgba(79, 70, 229, 0.5))', zIndex: 9999 }}>
+                    {/* Modern Premium DİZİYOO Logo - Clean & Professional Design */}
+                    <svg className="w-14 h-14 md:w-20 md:h-20 transition-transform group-hover:scale-105 duration-300" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <defs>
-                        <linearGradient id="logoUltraGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stopColor="#4f46e5" />
-                          <stop offset="20%" stopColor="#7c3aed" />
-                          <stop offset="40%" stopColor="#a855f7" />
-                          <stop offset="60%" stopColor="#d946ef" />
-                          <stop offset="80%" stopColor="#ec4899" />
-                          <stop offset="100%" stopColor="#f43f5e" />
+                        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="#6366f1" />
+                          <stop offset="50%" stopColor="#8b5cf6" />
+                          <stop offset="100%" stopColor="#ec4899" />
                         </linearGradient>
-                        <radialGradient id="logoInnerGlow" cx="50%" cy="50%">
-                          <stop offset="0%" stopColor="rgba(255,255,255,0.6)" />
-                          <stop offset="100%" stopColor="rgba(255,255,255,0)" />
-                        </radialGradient>
-                        <filter id="logoGlow" x="-50%" y="-50%" width="200%" height="200%">
-                          <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                        <linearGradient id="logoGradientLight" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="#818cf8" />
+                          <stop offset="50%" stopColor="#a78bfa" />
+                          <stop offset="100%" stopColor="#f472b6" />
+                        </linearGradient>
+                        <filter id="logoShadow" x="-20%" y="-20%" width="140%" height="140%">
+                          <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+                          <feOffset dx="0" dy="2" result="offsetblur"/>
+                          <feComponentTransfer>
+                            <feFuncA type="linear" slope="0.3"/>
+                          </feComponentTransfer>
                           <feMerge>
-                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode/>
                             <feMergeNode in="SourceGraphic"/>
                           </feMerge>
                         </filter>
-                        <filter id="logoShadow">
-                          <feDropShadow dx="0" dy="4" stdDeviation="8" floodColor="rgba(0,0,0,0.5)"/>
-                        </filter>
                       </defs>
-                      {/* Outer glow ring - Daha opak */}
-                      <circle cx="50" cy="50" r="45" fill="url(#logoUltraGradient)" opacity="0.6" filter="url(#logoGlow)"/>
-                      {/* Main circle with gradient - Tam opak */}
-                      <circle cx="50" cy="50" r="42" fill="url(#logoUltraGradient)" opacity="1" filter="url(#logoShadow)"/>
-                      {/* Inner glow effect - Daha belirgin */}
-                      <circle cx="50" cy="50" r="38" fill="url(#logoInnerGlow)"/>
-                      {/* Metallic border - Daha belirgin */}
-                      <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="2"/>
-                      {/* Premium play triangle with 3D effect - Tam opak */}
-                      <path d="M32 28 L32 72 L64 50 Z" fill="white" opacity="1" filter="url(#logoShadow)"/>
-                      {/* Inner play highlight */}
-                      <path d="M35 35 L35 65 L58 50 Z" fill="rgba(255,255,255,0.6)"/>
-                      {/* Top shine on play button */}
-                      <path d="M32 28 L32 40 L48 50 L32 40 Z" fill="rgba(255,255,255,0.8)"/>
-                      {/* Premium corner diamonds - Daha belirgin */}
-                      <path d="M12 12 L16 12 L14 16 Z" fill="white" opacity="1" className="group-hover:opacity-100 transition-opacity"/>
-                      <path d="M88 12 L92 12 L90 16 Z" fill="white" opacity="1" className="group-hover:opacity-100 transition-opacity"/>
-                      <path d="M12 88 L16 88 L14 92 Z" fill="white" opacity="1" className="group-hover:opacity-100 transition-opacity"/>
-                      <path d="M88 88 L92 88 L90 92 Z" fill="white" opacity="1" className="group-hover:opacity-100 transition-opacity"/>
-                      {/* Subtle inner decorative rings - Daha belirgin */}
-                      <circle cx="50" cy="50" r="32" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="1"/>
-                      <circle cx="50" cy="50" r="28" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="0.8"/>
+                      {/* Outer ring with gradient */}
+                      <circle cx="60" cy="60" r="55" fill="url(#logoGradient)" opacity="0.15"/>
+                      {/* Main circle */}
+                      <circle cx="60" cy="60" r="48" fill="url(#logoGradient)" filter="url(#logoShadow)"/>
+                      {/* Inner highlight circle */}
+                      <circle cx="60" cy="60" r="44" fill="url(#logoGradientLight)" opacity="0.4"/>
+                      {/* Play button triangle - Modern and clean */}
+                      <path d="M42 35 L42 85 L75 60 Z" fill="white" opacity="0.95"/>
+                      {/* Inner play highlight for depth */}
+                      <path d="M45 42 L45 78 L70 60 Z" fill="rgba(255,255,255,0.7)"/>
+                      {/* Subtle border */}
+                      <circle cx="60" cy="60" r="48" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5"/>
                     </svg>
-                    {/* Ultra premium animated pulse indicator - Daha belirgin */}
-                    <div className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-indigo-500 via-purple-500 via-pink-500 to-red-500 rounded-full animate-pulse shadow-2xl ring-4 ring-white/90 ring-offset-2 ring-offset-gray-900 z-50" style={{ filter: 'drop-shadow(0 0 12px rgba(79, 70, 229, 1))' }}></div>
-                    {/* Secondary glow dot - Daha belirgin */}
-                    <div className="absolute top-2 right-2 w-3 h-3 bg-white rounded-full opacity-100 animate-ping z-50" style={{ filter: 'drop-shadow(0 0 10px rgba(255, 255, 255, 1))' }}></div>
                   </div>
-                  <span className="font-black tracking-tight text-4xl md:text-5xl relative z-50" style={{ 
-                    background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 20%, #a855f7 40%, #d946ef 60%, #ec4899 80%, #f43f5e 100%)',
+                  <span className="font-extrabold tracking-tight text-3xl md:text-4xl" style={{ 
+                    background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text',
-                    textShadow: '0 2px 8px rgba(79, 70, 229, 0.4), 0 0 20px rgba(168, 85, 247, 0.3)',
-                    filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2))'
+                    letterSpacing: '-0.02em'
                   }}>
                     DİZİYOO
                   </span>

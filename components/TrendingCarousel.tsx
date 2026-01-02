@@ -143,7 +143,7 @@ export default function TrendingCarousel({ trendingToday, trendingWeek }: Trendi
                 href={getItemUrl(item)}
                 className="group flex-shrink-0 w-48 md:w-56"
               >
-                <div className="relative aspect-[2/3] rounded-lg overflow-hidden bg-gray-800 mb-2 shadow-lg">
+                <div className="relative aspect-[2/3] rounded-lg overflow-hidden bg-gray-800 mb-1 shadow-lg">
                   <Image
                     src={getPosterUrl(item.poster_path)}
                     alt={getItemTitle(item)}

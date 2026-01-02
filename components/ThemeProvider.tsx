@@ -17,12 +17,17 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     setMounted(true)
+    // İlk render'da hemen dark mode'u uygula
+    document.documentElement.classList.add('dark')
+    document.documentElement.classList.remove('light')
+    
     const savedTheme = localStorage.getItem('theme') as Theme
     if (savedTheme) {
       setTheme(savedTheme)
     } else {
       // Default olarak dark mode
       setTheme('dark')
+      localStorage.setItem('theme', 'dark')
     }
   }, [])
 
