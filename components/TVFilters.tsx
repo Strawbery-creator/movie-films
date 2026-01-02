@@ -112,6 +112,7 @@ export default function TVFilters({ genres, onFilterChange, variant = 'green' }:
   // Initialize filters on mount
   useEffect(() => {
     onFilterChange(filters)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // Close dropdowns when clicking outside
