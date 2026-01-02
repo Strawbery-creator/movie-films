@@ -21,7 +21,7 @@ export default function HeroSearchBar() {
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search for a movie, tv show, person......"
+          placeholder="Film, dizi veya kişi ara..."
           className="w-full px-6 py-4 pl-14 pr-32 bg-white rounded-full text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-primary-500/20 text-lg shadow-lg"
         />
         <svg

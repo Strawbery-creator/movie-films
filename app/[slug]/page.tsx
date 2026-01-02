@@ -304,7 +304,7 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
         <div className="flex flex-col md:flex-row gap-8">
           {/* Poster */}
           <div className="flex-shrink-0 relative">
-            <div className="relative w-48 md:w-64 h-72 md:h-96 rounded-lg overflow-hidden shadow-2xl border-2 border-white/10">
+            <div className="relative w-48 md:w-64 h-72 md:h-96 rounded-lg overflow-hidden shadow-2xl border-2 border-white/10 group">
               <Image
                 src={getPosterUrl(content.poster_path, 'w500')}
                 alt={contentTitle}
@@ -312,15 +312,15 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
                 className="object-cover"
                 unoptimized
               />
-            </div>
-            {/* Fragman İzle Butonu - Poster yanında/altında */}
-            {trailer && (
-              <div className="absolute -bottom-4 left-0 right-0 md:right-auto md:left-full md:ml-6 md:top-1/2 md:-translate-y-1/2 flex justify-center md:justify-start">
-                <div className="bg-gray-900/95 backdrop-blur-sm rounded-lg p-2 border border-white/10 shadow-2xl">
-                  <TrailerPlayer trailerKey={trailer.key} title={contentTitle} />
+              {/* Fragman İzle Butonu - Poster görselinin üzerinde, ortada */}
+              {trailer && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/50 transition-colors rounded-lg">
+                  <div className="transform group-hover:scale-105 transition-transform">
+                    <TrailerPlayer trailerKey={trailer.key} title={contentTitle} />
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
 
           {/* Details */}
