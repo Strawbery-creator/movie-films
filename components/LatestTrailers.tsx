@@ -235,7 +235,6 @@ export default function LatestTrailers() {
               </div>
             </div>
           </div>
-        </div>
       </section>
 
       {/* Trailer Modal */}
