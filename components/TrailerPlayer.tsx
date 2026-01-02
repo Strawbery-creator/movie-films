@@ -54,7 +54,7 @@ export default function TrailerPlayer({ trailerKey, title }: TrailerPlayerProps)
 
       {isOpen && createPortal(
         <div
-          className="fixed inset-0 bg-black flex items-center justify-center p-0"
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 md:p-8"
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               setIsOpen(false);
@@ -67,77 +67,76 @@ export default function TrailerPlayer({ trailerKey, title }: TrailerPlayerProps)
             right: 0, 
             bottom: 0,
             zIndex: 99999,
-            backgroundColor: '#000000'
           }}
         >
-          {/* Kapat Butonu - Sağ üst köşede, her zaman görünür */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsOpen(false);
-            }}
-            className="fixed top-4 right-4 w-14 h-14 bg-red-600 hover:bg-red-700 rounded-full flex items-center justify-center transition-all shadow-2xl border-3 border-white/40 hover:scale-110"
-            aria-label="Kapat"
+          {/* Pop-up Modal Container - Büyük ve merkezde */}
+          <div 
+            className="relative bg-black rounded-lg shadow-2xl overflow-hidden w-full max-w-[1600px] aspect-video"
+            onClick={(e) => e.stopPropagation()}
             style={{ 
-              position: 'fixed',
-              zIndex: 100000
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.8)',
             }}
           >
-            <svg
-              className="w-8 h-8 text-white"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              strokeWidth={3}
+            {/* Kapat Butonu - Sağ üst köşede, modal içinde */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsOpen(false);
+              }}
+              className="absolute top-4 right-4 w-12 h-12 bg-red-600 hover:bg-red-700 rounded-full flex items-center justify-center transition-all shadow-2xl border-2 border-white/40 hover:scale-110 z-50"
+              aria-label="Kapat"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-          
-          {/* Paylaş Butonu - Kapat butonunun yanında (solunda) */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              if (navigator.share) {
-                navigator.share({
-                  title: title,
-                  text: `${title} fragmanını izle`,
-                  url: window.location.href,
-                }).catch(() => {});
-              } else {
-                navigator.clipboard.writeText(window.location.href);
-                alert('Link kopyalandı!');
-              }
-            }}
-            className="fixed top-4 right-20 w-14 h-14 bg-blue-600 hover:bg-blue-700 rounded-full flex items-center justify-center transition-all shadow-2xl border-3 border-white/40 hover:scale-110"
-            aria-label="Paylaş"
-            style={{ 
-              position: 'fixed',
-              zIndex: 100000
-            }}
-          >
-            <svg
-              className="w-8 h-8 text-white"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              strokeWidth={2.5}
+              <svg
+                className="w-6 h-6 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                strokeWidth={3}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            
+            {/* Paylaş Butonu - Kapat butonunun yanında (solunda) */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                if (navigator.share) {
+                  navigator.share({
+                    title: title,
+                    text: `${title} fragmanını izle`,
+                    url: window.location.href,
+                  }).catch(() => {});
+                } else {
+                  navigator.clipboard.writeText(window.location.href);
+                  alert('Link kopyalandı!');
+                }
+              }}
+              className="absolute top-4 right-20 w-12 h-12 bg-blue-600 hover:bg-blue-700 rounded-full flex items-center justify-center transition-all shadow-2xl border-2 border-white/40 hover:scale-110 z-50"
+              aria-label="Paylaş"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-            </svg>
-          </button>
-          
-          {/* TMDB benzeri trailer modal boyutları - 16:9 aspect ratio, max-width 1280px */}
-          <div className="relative w-full max-w-[1280px] aspect-video bg-black overflow-hidden flex items-center justify-center mx-auto">
-            <iframe
-              src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1&modestbranding=1&rel=0&showinfo=0&controls=1&playsinline=1`}
-              className="w-full h-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              onClick={(e) => e.stopPropagation()}
-              title={title}
-              style={{ pointerEvents: 'auto' }}
-            />
+              <svg
+                className="w-6 h-6 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                strokeWidth={2.5}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+              </svg>
+            </button>
+            
+            {/* Video Container - Tam genişlik ve yükseklik */}
+            <div className="relative w-full h-full bg-black">
+              <iframe
+                src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1&modestbranding=1&rel=0&showinfo=0&controls=1&playsinline=1`}
+                className="absolute inset-0 w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                title={title}
+                style={{ pointerEvents: 'auto' }}
+              />
+            </div>
           </div>
         </div>,
         document.body
