@@ -47,11 +47,17 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
   
   try {
-    const content = type === 'movie' 
-      ? await getMovieDetails(id)
-      : await getTVShowDetails(id);
+    let content: any;
+    let title: string;
     
-    const title = type === 'movie' ? (content as any).title : (content as any).name;
+    if (type === 'movie') {
+      content = await getMovieDetails(id);
+      title = content.title;
+    } else {
+      content = await getTVShowDetails(id);
+      title = content.name;
+    }
+    
     const typeText = type === 'movie' ? 'filmi' : 'dizisi';
     
     return {
