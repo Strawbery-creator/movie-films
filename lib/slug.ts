@@ -18,7 +18,6 @@ function turkishToEnglish(text: string): string {
 export function createSlug(title: string, type: 'movie' | 'tv'): string {
   // Boş veya geçersiz title kontrolü
   if (!title || typeof title !== 'string' || title.trim() === '') {
-    console.error('createSlug: Geçersiz title:', title);
     return type === 'movie' ? 'film-hangi-platformda' : 'dizi-hangi-platformda';
   }
   
@@ -45,7 +44,6 @@ export function createSlug(title: string, type: 'movie' | 'tv'): string {
   
   // Eğer slug hala boşsa veya sadece tire içeriyorsa, fallback kullan
   if (!slug || slug === '' || slug === '-') {
-    console.error('createSlug: Slug oluşturulamadı, fallback kullanılıyor:', { title, slug });
     return type === 'movie' ? 'film-hangi-platformda' : 'dizi-hangi-platformda';
   }
   
@@ -103,7 +101,6 @@ export async function getIdFromSlug(slug: string): Promise<{ id: number | null; 
     const { title, type } = extractTitleFromSlug(slug);
     
     if (!title || !type) {
-      console.error('extractTitleFromSlug başarısız:', { slug, title, type });
       return { id: null, type: null };
     }
     
@@ -111,7 +108,6 @@ export async function getIdFromSlug(slug: string): Promise<{ id: number | null; 
     const searchResults = await searchContent(title, 1);
     
     if (!searchResults.results || searchResults.results.length === 0) {
-      console.error('TMDB search sonuç bulamadı:', { title, type });
       return { id: null, type: null };
     }
     
@@ -125,7 +121,6 @@ export async function getIdFromSlug(slug: string): Promise<{ id: number | null; 
     });
     
     if (filteredResults.length === 0) {
-      console.error('Filtrelenmiş sonuç bulunamadı:', { title, type, totalResults: searchResults.results.length });
       return { id: null, type: null };
     }
     
@@ -145,15 +140,9 @@ export async function getIdFromSlug(slug: string): Promise<{ id: number | null; 
     }
     
     // Eşleşme yoksa yine de ilk sonucu döndür (fallback)
-    console.warn('Tam eşleşme bulunamadı, ilk sonuç kullanılıyor:', { 
-      searchTitle, 
-      resultTitle, 
-      id: firstResult.id 
-    });
     return { id: firstResult.id, type };
     
   } catch (error) {
-    console.error('Slug\'dan ID bulunamadı:', error);
     return { id: null, type: null };
   }
 }
@@ -162,7 +151,6 @@ export async function getIdFromSlug(slug: string): Promise<{ id: number | null; 
 export function createPersonSlug(name: string): string {
   // Boş veya geçersiz name kontrolü
   if (!name || typeof name !== 'string' || name.trim() === '') {
-    console.error('createPersonSlug: Geçersiz name:', name);
     return 'oyuncu-filmleri-dizileri';
   }
   
@@ -185,7 +173,6 @@ export function createPersonSlug(name: string): string {
     // TMDB'den ID ile erişim için, slug yerine ID kullanılabilir
     // Ama şimdilik basit bir fallback slug oluştur
     const fallbackSlug = `oyuncu-${name.charCodeAt(0)}-filmleri-dizileri`;
-    console.warn('createPersonSlug: Latin olmayan karakterler temizlendi, fallback kullanılıyor:', { name, fallbackSlug });
     return fallbackSlug;
   }
   
@@ -207,7 +194,6 @@ export function createPersonSlug(name: string): string {
   // Eğer slug hala boşsa, fallback kullan
   if (!slug || slug === '') {
     const fallbackSlug = `oyuncu-${Date.now()}-filmleri-dizileri`;
-    console.warn('createPersonSlug: Slug oluşturulamadı, fallback kullanılıyor:', { name, fallbackSlug });
     return fallbackSlug;
   }
   
@@ -257,7 +243,6 @@ export async function getPersonIdFromSlug(slug: string): Promise<number | null> 
     // Eşleşme yoksa yine de ilk sonucu döndür (fallback)
     return firstResult.id;
   } catch (error) {
-    console.error('Person slug\'dan ID bulunamadı:', error);
     return null;
   }
 }

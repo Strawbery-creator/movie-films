@@ -262,13 +262,13 @@ export default function LatestTrailers() {
             backgroundColor: '#000000'
           }}
         >
-          {/* Kapat Butonu - Sol üst köşede, her zaman görünür */}
+          {/* Kapat Butonu - Sağ üst köşede, her zaman görünür */}
           <button
             onClick={(e) => {
               e.stopPropagation();
               closeTrailer();
             }}
-            className="fixed top-4 left-4 w-14 h-14 bg-red-600 hover:bg-red-700 rounded-full flex items-center justify-center transition-all shadow-2xl border-3 border-white/40 hover:scale-110"
+            className="fixed top-4 right-4 w-14 h-14 bg-red-600 hover:bg-red-700 rounded-full flex items-center justify-center transition-all shadow-2xl border-3 border-white/40 hover:scale-110"
             aria-label="Kapat"
             style={{ 
               position: 'fixed',
@@ -286,7 +286,7 @@ export default function LatestTrailers() {
             </svg>
           </button>
           
-          {/* Paylaş Butonu - Kapat butonunun yanında */}
+          {/* Paylaş Butonu - Kapat butonunun yanında (solunda) */}
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -301,7 +301,7 @@ export default function LatestTrailers() {
                 alert('Link kopyalandı!');
               }
             }}
-            className="fixed top-4 left-20 w-14 h-14 bg-blue-600 hover:bg-blue-700 rounded-full flex items-center justify-center transition-all shadow-2xl border-3 border-white/40 hover:scale-110"
+            className="fixed top-4 right-20 w-14 h-14 bg-blue-600 hover:bg-blue-700 rounded-full flex items-center justify-center transition-all shadow-2xl border-3 border-white/40 hover:scale-110"
             aria-label="Paylaş"
             style={{ 
               position: 'fixed',
