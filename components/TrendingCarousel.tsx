@@ -4,6 +4,7 @@ import { useState, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { getPosterUrl, Movie, TVShow } from '@/lib/tmdb'
+import { createSlug } from '@/lib/slug'
 
 interface TrendingCarouselProps {
   trendingToday: (Movie | TVShow)[]
@@ -62,7 +63,7 @@ export default function TrendingCarousel({ trendingToday, trendingWeek }: Trendi
   }
 
   const getItemUrl = (item: Movie | TVShow) => {
-    return 'title' in item ? `/movie/${item.id}` : `/tv/${item.id}`
+    return 'title' in item ? `/${createSlug(item.title, 'movie')}` : `/${createSlug(item.name, 'tv')}`
   }
 
   const getRating = (item: Movie | TVShow) => {

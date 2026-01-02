@@ -202,6 +202,27 @@ export async function searchContent(query: string, page: number = 1): Promise<Se
   return data;
 }
 
+// Person arama yap
+export interface PersonSearchResult {
+  id: number;
+  name: string;
+  profile_path: string | null;
+  known_for_department: string;
+  popularity: number;
+}
+
+export interface PersonSearchResults {
+  page: number;
+  results: PersonSearchResult[];
+  total_pages: number;
+  total_results: number;
+}
+
+export async function searchPerson(query: string, page: number = 1): Promise<PersonSearchResults> {
+  const data = await fetchFromTMDB(`/search/person?query=${encodeURIComponent(query)}&page=${page}`);
+  return data;
+}
+
 // Film cast ve crew bilgilerini getir
 export async function getMovieCredits(id: number): Promise<Credits> {
   return await fetchFromTMDB(`/movie/${id}/credits`);

@@ -1,11 +1,12 @@
 import Link from 'next/link'
 import { getPopularMovies, getPopularTVShows, getTopRatedMovies, getTopRatedTVShows, getTrendingAll, getPosterUrl, getBackdropUrl, Movie, TVShow } from '@/lib/tmdb'
+import { createSlug } from '@/lib/slug'
 import Image from 'next/image'
 import TrendingCarousel from '@/components/TrendingCarousel'
 
 async function MovieCard({ movie }: { movie: Movie }) {
   return (
-    <Link href={`/movie/${movie.id}`} className="group">
+    <Link href={`/${createSlug(movie.title, 'movie')}`} className="group">
       <div className="relative aspect-[2/3] rounded-lg overflow-hidden bg-gray-800 mb-2">
         <Image
           src={getPosterUrl(movie.poster_path)}
@@ -28,7 +29,7 @@ async function MovieCard({ movie }: { movie: Movie }) {
 
 async function TVCard({ tvShow }: { tvShow: TVShow }) {
   return (
-    <Link href={`/tv/${tvShow.id}`} className="group">
+    <Link href={`/${createSlug(tvShow.name, 'tv')}`} className="group">
       <div className="relative aspect-[2/3] rounded-lg overflow-hidden bg-gray-800 mb-2">
         <Image
           src={getPosterUrl(tvShow.poster_path)}

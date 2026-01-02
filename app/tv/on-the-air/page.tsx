@@ -4,11 +4,12 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { getPosterUrl, TVShow } from '@/lib/tmdb'
+import { createSlug } from '@/lib/slug'
 import TVFilters, { TVFilterState } from '@/components/TVFilters'
 
 function TVCard({ tvShow }: { tvShow: TVShow }) {
   return (
-    <Link href={`/tv/${tvShow.id}`} className="group">
+    <Link href={`/${createSlug(tvShow.name, 'tv')}`} className="group">
       <div className="relative aspect-[2/3] rounded-lg overflow-hidden bg-gray-800 mb-2">
         <Image
           src={getPosterUrl(tvShow.poster_path)}

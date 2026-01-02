@@ -4,6 +4,7 @@ import { useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { getProfileUrl, CastMember } from '@/lib/tmdb'
+import { createPersonSlug } from '@/lib/slug'
 
 interface CastCarouselProps {
   cast: CastMember[]
@@ -63,7 +64,7 @@ export default function CastCarousel({ cast, title = 'Başrol Oyuncuları' }: Ca
           <div className="flex gap-4" style={{ width: 'max-content' }}>
             {cast.slice(0, 12).map((actor: CastMember) => (
               <div key={actor.id} className="flex-shrink-0 w-36 md:w-40 group">
-                <Link href={`/person/${actor.id}`} className="block">
+                <Link href={`/${createPersonSlug(actor.name)}`} className="block">
                   <div className="relative aspect-[2/3] rounded-lg overflow-hidden bg-gray-200 mb-2 shadow-lg">
                     <Image
                       src={getProfileUrl(actor.profile_path, 'w185')}

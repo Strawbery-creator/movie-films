@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { getPosterUrl, Movie, TVShow } from '@/lib/tmdb'
+import { createSlug } from '@/lib/slug'
 
 export const dynamic = 'force-dynamic'
 
@@ -141,7 +142,7 @@ function SearchContent() {
   }
 
   const getItemUrl = (item: Movie | TVShow) => {
-    return 'title' in item ? `/movie/${item.id}` : `/tv/${item.id}`
+    return 'title' in item ? `/${createSlug(item.title, 'movie')}` : `/${createSlug(item.name, 'tv')}`
   }
 
   const getRating = (item: Movie | TVShow) => {

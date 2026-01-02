@@ -4,11 +4,12 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { getPosterUrl, Movie } from '@/lib/tmdb'
+import { createSlug } from '@/lib/slug'
 import MovieFilters, { FilterState } from '@/components/MovieFilters'
 
 function MovieCard({ movie }: { movie: Movie }) {
   return (
-    <Link href={`/movie/${movie.id}`} className="group">
+    <Link href={`/${createSlug(movie.title, 'movie')}`} className="group">
       <div className="relative aspect-[2/3] rounded-lg overflow-hidden bg-gray-800 mb-2">
         <Image
           src={getPosterUrl(movie.poster_path)}
