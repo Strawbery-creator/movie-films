@@ -62,9 +62,16 @@ export default function CastCarousel({ cast, title = 'Başrol Oyuncuları' }: Ca
         {/* Cast List */}
         <div ref={scrollContainerRef} className="overflow-x-auto scrollbar-hide pb-4">
           <div className="flex gap-4" style={{ width: 'max-content' }}>
-            {cast.slice(0, 12).map((actor: CastMember) => (
+            {cast.slice(0, 12).map((actor: CastMember) => {
+              // Çince/Japonca/Korece karakterler için ID kullan
+              const hasNonLatinChars = /[^\u0000-\u007F]/.test(actor.name);
+              const personUrl = hasNonLatinChars 
+                ? `/person/${actor.id}` 
+                : `/${createPersonSlug(actor.name)}`;
+              
+              return (
               <div key={actor.id} className="flex-shrink-0 w-36 md:w-40 group">
-                <Link href={`/${createPersonSlug(actor.name)}`} className="block">
+                <Link href={personUrl} className="block">
                   <div className="relative aspect-[2/3] rounded-lg overflow-hidden bg-gray-200 mb-2 shadow-lg">
                     <Image
                       src={getProfileUrl(actor.profile_path, 'w185')}
@@ -87,7 +94,8 @@ export default function CastCarousel({ cast, title = 'Başrol Oyuncuları' }: Ca
                   </div>
                 </Link>
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

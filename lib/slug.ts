@@ -160,11 +160,34 @@ export async function getIdFromSlug(slug: string): Promise<{ id: number | null; 
 
 // Person adından SEO-friendly slug oluştur
 export function createPersonSlug(name: string): string {
+  // Boş veya geçersiz name kontrolü
+  if (!name || typeof name !== 'string' || name.trim() === '') {
+    console.error('createPersonSlug: Geçersiz name:', name);
+    return 'oyuncu-filmleri-dizileri';
+  }
+  
+  // Çince, Japonca, Korece gibi karakterler için özel işlem
+  // Eğer sadece Latin olmayan karakterler varsa, TMDB ID kullanılmalı
+  // Ama şimdilik slug oluşturmayı deneyelim
+  
   // Türkçe karakterleri çevir
   let slug = turkishToEnglish(name);
   
   // Küçük harfe çevir
   slug = slug.toLowerCase();
+  
+  // Latin olmayan karakterleri (Çince, Japonca, Korece, Arapça vb.) temizle
+  // Sadece Latin harfler, rakamlar, boşluk ve tire bırak
+  slug = slug.replace(/[^\u0000-\u007F\s-]/g, '');
+  
+  // Eğer slug boşaldıysa (sadece Latin olmayan karakterler vardı), fallback kullan
+  if (!slug || slug.trim() === '') {
+    // TMDB'den ID ile erişim için, slug yerine ID kullanılabilir
+    // Ama şimdilik basit bir fallback slug oluştur
+    const fallbackSlug = `oyuncu-${name.charCodeAt(0)}-filmleri-dizileri`;
+    console.warn('createPersonSlug: Latin olmayan karakterler temizlendi, fallback kullanılıyor:', { name, fallbackSlug });
+    return fallbackSlug;
+  }
   
   // Özel karakterleri temizle, sadece harf, rakam ve boşluk bırak
   slug = slug.replace(/[^a-z0-9\s-]/g, '');
@@ -180,6 +203,13 @@ export function createPersonSlug(name: string): string {
   
   // Başta ve sonda tire varsa kaldır
   slug = slug.replace(/^-+|-+$/g, '');
+  
+  // Eğer slug hala boşsa, fallback kullan
+  if (!slug || slug === '') {
+    const fallbackSlug = `oyuncu-${Date.now()}-filmleri-dizileri`;
+    console.warn('createPersonSlug: Slug oluşturulamadı, fallback kullanılıyor:', { name, fallbackSlug });
+    return fallbackSlug;
+  }
   
   // Person suffix ekle
   return `${slug}-filmleri-dizileri`;

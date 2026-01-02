@@ -109,7 +109,7 @@ export default function LatestTrailers() {
                   onClick={() => setActiveFilter(filter.value)}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                     activeFilter === filter.value
-                      ? 'bg-teal-500 text-white'
+                      ? 'bg-teal-500 text-white shadow-lg'
                       : 'bg-gray-700/50 text-white hover:bg-gray-700'
                   }`}
                 >
@@ -118,12 +118,13 @@ export default function LatestTrailers() {
               ))}
             </div>
           </div>
+        </div>
 
-          <div className="relative">
-            {/* Sol Ok Butonu */}
+        <div className="relative w-full px-6 md:px-8">
+            {/* Sol Ok Butonu - İçerik görselinde ortalanmış */}
             <button
               onClick={() => scroll('left')}
-              className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 shadow-lg transition-all hover:scale-110 group"
+              className="absolute left-6 md:left-8 top-1/2 -translate-y-1/2 z-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 shadow-lg transition-all hover:scale-110 group"
               aria-label="Sol"
             >
               <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -131,10 +132,10 @@ export default function LatestTrailers() {
               </svg>
             </button>
 
-            {/* Sağ Ok Butonu */}
+            {/* Sağ Ok Butonu - İçerik görselinde ortalanmış */}
             <button
               onClick={() => scroll('right')}
-              className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 shadow-lg transition-all hover:scale-110 group"
+              className="absolute right-6 md:right-8 top-1/2 -translate-y-1/2 z-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 shadow-lg transition-all hover:scale-110 group"
               aria-label="Sağ"
             >
               <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -150,7 +151,7 @@ export default function LatestTrailers() {
                 msOverflowStyle: 'none'
               }}
             >
-              <div className="flex gap-4 px-4 md:px-6" style={{ width: 'max-content' }}>
+              <div className="flex gap-4" style={{ width: 'max-content' }}>
                 {trailers.map((trailer) => {
                   const date = trailer.release_date || trailer.first_air_date;
                   const url = trailer.media_type === 'movie'
@@ -173,7 +174,7 @@ export default function LatestTrailers() {
                           src={imageUrl}
                           alt={trailer.title}
                           fill
-                          className="object-cover"
+                          className="object-cover pointer-events-none"
                           sizes="(max-width: 768px) 256px, 320px"
                           unoptimized={trailer.poster_path === null && trailer.backdrop_path === null}
                         />
@@ -182,7 +183,7 @@ export default function LatestTrailers() {
                         {trailer.trailer_key ? (
                           <button
                             onClick={() => handlePlayTrailer(trailer)}
-                            className="absolute inset-0 flex items-center justify-center bg-black/30 hover:bg-black/50 transition-colors group/play cursor-pointer"
+                            className="absolute inset-0 flex items-center justify-center bg-black/30 hover:bg-black/50 transition-colors group/play cursor-pointer z-10"
                           >
                             <div className="w-16 h-16 md:w-20 md:h-20 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-lg">
                               <svg
@@ -256,20 +257,21 @@ export default function LatestTrailers() {
               className="absolute top-4 right-4 z-10 w-10 h-10 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center transition-colors"
             >
               <svg
-                className="w-6 h-6 text-white"
+                className="w-7 h-7 text-white"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
             <iframe
-              src={`https://www.youtube.com/embed/${selectedTrailer.trailer_key}?autoplay=1`}
+              src={`https://www.youtube.com/embed/${selectedTrailer.trailer_key}?autoplay=1&modestbranding=1&rel=0&showinfo=0&controls=1`}
               className="w-full h-full"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               onClick={(e) => e.stopPropagation()}
+              style={{ pointerEvents: 'auto' }}
             />
           </div>
         </div>

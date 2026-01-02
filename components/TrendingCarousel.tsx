@@ -100,11 +100,11 @@ export default function TrendingCarousel({ trendingToday, trendingWeek }: Trendi
         </div>
       </div>
 
-      <div className="relative w-full">
-        {/* Sol Ok Butonu */}
+      <div className="relative w-full px-6 md:px-8">
+        {/* Sol Ok Butonu - İçerik görselinde ortalanmış */}
         <button
           onClick={() => scroll('left')}
-          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 shadow-lg transition-all hover:scale-110 group"
+          className="absolute left-6 md:left-8 top-1/2 -translate-y-1/2 z-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 shadow-lg transition-all hover:scale-110 group"
           aria-label="Sol"
         >
           <svg className="w-6 h-6 text-white group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -112,10 +112,10 @@ export default function TrendingCarousel({ trendingToday, trendingWeek }: Trendi
           </svg>
         </button>
 
-        {/* Sağ Ok Butonu */}
+        {/* Sağ Ok Butonu - İçerik görselinde ortalanmış */}
         <button
           onClick={() => scroll('right')}
-          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 shadow-lg transition-all hover:scale-110 group"
+          className="absolute right-6 md:right-8 top-1/2 -translate-y-1/2 z-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 shadow-lg transition-all hover:scale-110 group"
           aria-label="Sağ"
         >
           <svg className="w-6 h-6 text-white group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">

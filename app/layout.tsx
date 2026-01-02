@@ -22,31 +22,44 @@ export default function RootLayout({
               <div className="flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4">
                 <a href="/" className="flex items-center gap-3 text-xl md:text-2xl font-bold text-primary-400 hover:text-primary-300 transition whitespace-nowrap group">
                   <div className="relative">
-                    {/* Modern DİZİYOO Logo - Play Button with Gradient */}
-                    <svg className="w-12 h-12 md:w-14 md:h-14 transition-all group-hover:scale-110" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    {/* Profesyonel DİZİYOO Logo - Premium Design */}
+                    <svg className="w-12 h-12 md:w-14 md:h-14 transition-all group-hover:scale-110 group-hover:rotate-3" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <defs>
-                        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stopColor="#3b82f6" />
-                          <stop offset="50%" stopColor="#8b5cf6" />
-                          <stop offset="100%" stopColor="#ec4899" />
+                        <linearGradient id="logoGradientPremium" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="#6366f1" />
+                          <stop offset="25%" stopColor="#8b5cf6" />
+                          <stop offset="50%" stopColor="#ec4899" />
+                          <stop offset="75%" stopColor="#f43f5e" />
+                          <stop offset="100%" stopColor="#ef4444" />
                         </linearGradient>
+                        <filter id="glow">
+                          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                          <feMerge>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                          </feMerge>
+                        </filter>
                       </defs>
-                      {/* Outer Circle with gradient */}
-                      <circle cx="32" cy="32" r="30" fill="url(#logoGradient)" className="group-hover:opacity-90 transition-opacity"/>
-                      {/* Inner glow circle */}
-                      <circle cx="32" cy="32" r="26" fill="none" stroke="white" strokeWidth="1" opacity="0.3"/>
-                      {/* Play Triangle */}
-                      <path d="M26 20 L26 44 L44 32 Z" fill="white" className="drop-shadow-lg"/>
-                      {/* Decorative corner elements */}
-                      <rect x="10" y="10" width="3" height="3" rx="0.5" fill="white" opacity="0.7"/>
-                      <rect x="51" y="10" width="3" height="3" rx="0.5" fill="white" opacity="0.7"/>
-                      <rect x="10" y="51" width="3" height="3" rx="0.5" fill="white" opacity="0.7"/>
-                      <rect x="51" y="51" width="3" height="3" rx="0.5" fill="white" opacity="0.7"/>
+                      {/* Outer ring with gradient and glow */}
+                      <circle cx="40" cy="40" r="36" fill="url(#logoGradientPremium)" className="group-hover:opacity-95 transition-opacity" filter="url(#glow)"/>
+                      {/* Inner shadow circle */}
+                      <circle cx="40" cy="40" r="32" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5"/>
+                      {/* Premium play triangle with shadow */}
+                      <path d="M28 24 L28 56 L52 40 Z" fill="white" className="drop-shadow-2xl" opacity="0.95"/>
+                      {/* Inner highlight on play button */}
+                      <path d="M30 28 L30 52 L48 40 Z" fill="rgba(255,255,255,0.3)"/>
+                      {/* Premium corner accents */}
+                      <circle cx="16" cy="16" r="2.5" fill="white" opacity="0.8" className="group-hover:opacity-100 transition-opacity"/>
+                      <circle cx="64" cy="16" r="2.5" fill="white" opacity="0.8" className="group-hover:opacity-100 transition-opacity"/>
+                      <circle cx="16" cy="64" r="2.5" fill="white" opacity="0.8" className="group-hover:opacity-100 transition-opacity"/>
+                      <circle cx="64" cy="64" r="2.5" fill="white" opacity="0.8" className="group-hover:opacity-100 transition-opacity"/>
+                      {/* Subtle inner ring */}
+                      <circle cx="40" cy="40" r="28" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.5"/>
                     </svg>
-                    {/* Animated pulse dot */}
-                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full animate-pulse shadow-lg ring-2 ring-white/50"></div>
+                    {/* Premium animated pulse indicator */}
+                    <div className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full animate-pulse shadow-xl ring-2 ring-white/60 ring-offset-2 ring-offset-gray-900"></div>
                   </div>
-                  <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent font-extrabold tracking-tight drop-shadow-lg">
+                  <span className="bg-gradient-to-r from-indigo-400 via-purple-500 via-pink-500 to-red-500 bg-clip-text text-transparent font-black tracking-tighter drop-shadow-xl text-2xl md:text-3xl">
                     DİZİYOO
                   </span>
                 </a>
