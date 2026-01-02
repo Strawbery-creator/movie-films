@@ -291,8 +291,8 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
         
         {/* Trailer Play Button - Backdrop üzerinde, ortada */}
         {trailer && (
-          <div className="absolute inset-0 flex items-center justify-center z-10">
-            <div className="text-center">
+          <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
+            <div className="text-center pointer-events-auto">
               <TrailerPlayer trailerKey={trailer.key} title={contentTitle} />
             </div>
           </div>
