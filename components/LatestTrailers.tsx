@@ -20,17 +20,7 @@ interface TrailerItem {
   trailer_name: string | null;
 }
 
-type FilterType = 'popular' | 'streaming' | 'on-tv' | 'in-theaters';
-
-const FILTERS: { value: FilterType; label: string }[] = [
-  { value: 'popular', label: 'Popüler' },
-  { value: 'streaming', label: 'Yayında' },
-  { value: 'in-theaters', label: 'Sinemada' },
-  { value: 'on-tv', label: 'TV\'de' },
-];
-
 export default function LatestTrailers() {
-  const [activeFilter, setActiveFilter] = useState<FilterType>('popular');
   const [trailers, setTrailers] = useState<TrailerItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedTrailer, setSelectedTrailer] = useState<TrailerItem | null>(null);
@@ -42,13 +32,13 @@ export default function LatestTrailers() {
   }, []);
 
   useEffect(() => {
-    fetchTrailers(activeFilter);
-  }, [activeFilter]);
+    fetchTrailers();
+  }, []);
 
-  const fetchTrailers = async (filter: FilterType) => {
+  const fetchTrailers = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/trailers?filter=${filter}`);
+      const response = await fetch(`/api/trailers?filter=popular`);
       const data = await response.json();
       // Sadece trailer'ı olan içerikleri göster (TMDB gibi)
       const trailersWithVideo = (data.results || []).filter((item: TrailerItem) => item.trailer_key !== null);
@@ -106,23 +96,8 @@ export default function LatestTrailers() {
     <>
       <section className="mb-12 bg-gradient-to-br from-orange-600 via-red-600 to-pink-600 py-12 w-full">
         <div className="w-full px-6 md:px-8">
-          <div className="flex items-center justify-between mb-6">
+          <div className="mb-6">
             <h2 className="text-3xl md:text-4xl font-bold text-white">Son Fragmanlar</h2>
-            <div className="flex gap-2 flex-wrap">
-              {FILTERS.map((filter) => (
-                <button
-                  key={filter.value}
-                  onClick={() => setActiveFilter(filter.value)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                    activeFilter === filter.value
-                      ? 'bg-teal-500 text-white shadow-lg'
-                      : 'bg-gray-700/50 text-white hover:bg-gray-700'
-                  }`}
-                >
-                  {filter.label}
-                </button>
-              ))}
-            </div>
           </div>
         </div>
 
@@ -319,7 +294,8 @@ export default function LatestTrailers() {
             </svg>
           </button>
           
-          <div className="relative w-full h-full max-w-[98vw] max-h-[98vh] aspect-video bg-black overflow-hidden flex items-center justify-center">
+          {/* TMDB benzeri trailer modal boyutları - 16:9 aspect ratio, max-width 1280px */}
+          <div className="relative w-full max-w-[1280px] aspect-video bg-black overflow-hidden flex items-center justify-center mx-auto">
             <iframe
               src={`https://www.youtube.com/embed/${selectedTrailer.trailer_key}?autoplay=1&modestbranding=1&rel=0&showinfo=0&controls=1&playsinline=1`}
               className="w-full h-full"

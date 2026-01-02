@@ -127,7 +127,8 @@ export default function TrailerPlayer({ trailerKey, title }: TrailerPlayerProps)
             </svg>
           </button>
           
-          <div className="relative w-full h-full max-w-[98vw] max-h-[98vh] aspect-video bg-black overflow-hidden flex items-center justify-center">
+          {/* TMDB benzeri trailer modal boyutları - 16:9 aspect ratio, max-width 1280px */}
+          <div className="relative w-full max-w-[1280px] aspect-video bg-black overflow-hidden flex items-center justify-center mx-auto">
             <iframe
               src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1&modestbranding=1&rel=0&showinfo=0&controls=1&playsinline=1`}
               className="w-full h-full"
