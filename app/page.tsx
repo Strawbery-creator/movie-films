@@ -120,18 +120,27 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* White Spacer */}
+      <div className="bg-white dark:bg-gray-900 h-4"></div>
+
       {/* Latest Trailers - Full width with red gradient background */}
       <LatestTrailers />
 
+      {/* White Spacer */}
+      <div className="bg-white dark:bg-gray-900 h-4"></div>
+
       {/* Trending Carousel - Full width with gray background */}
       {trendingToday.results.length > 0 && trendingWeek.results.length > 0 && (
-        <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-3 mb-4 w-full">
+        <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-3 mb-0 w-full">
           <TrendingCarousel 
             trendingToday={trendingToday.results.slice(0, 20)} 
             trendingWeek={trendingWeek.results.slice(0, 20)} 
           />
         </div>
       )}
+
+      {/* White Spacer */}
+      <div className="bg-white dark:bg-gray-900 h-4"></div>
 
       <div>
 
@@ -150,7 +159,7 @@ export default async function Home() {
 
         {/* Popüler Filmler */}
         {popularMovies.results.length > 0 && (
-          <section className="mb-4 bg-gradient-to-br from-blue-600 via-cyan-600 to-teal-600 py-4">
+          <section className="mb-0 bg-gradient-to-br from-blue-600 via-cyan-600 to-teal-600 py-4">
             <div className="container mx-auto px-4">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-3xl font-bold text-white drop-shadow-lg">Popüler Filmler</h2>
@@ -167,9 +176,14 @@ export default async function Home() {
           </section>
         )}
 
+        {/* White Spacer */}
+        {popularMovies.results.length > 0 && (
+          <div className="bg-white dark:bg-gray-900 h-4"></div>
+        )}
+
         {/* En Yüksek Puanlı Filmler */}
         {topRatedMovies.results.length > 0 && (
-          <section className="mb-4 bg-gradient-to-br from-amber-600 via-yellow-600 to-orange-500 py-4">
+          <section className="mb-0 bg-gradient-to-br from-amber-600 via-yellow-600 to-orange-500 py-4">
             <div className="container mx-auto px-4">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-3xl font-bold text-white drop-shadow-lg">
@@ -189,9 +203,14 @@ export default async function Home() {
           </section>
         )}
 
+        {/* White Spacer */}
+        {topRatedMovies.results.length > 0 && (
+          <div className="bg-white dark:bg-gray-900 h-4"></div>
+        )}
+
         {/* Popüler Diziler */}
         {popularTVShows.results.length > 0 && (
-          <section className="mb-4 bg-gradient-to-br from-emerald-600 via-green-600 to-lime-600 py-4">
+          <section className="mb-0 bg-gradient-to-br from-emerald-600 via-green-600 to-lime-600 py-4">
             <div className="container mx-auto px-4">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-3xl font-bold text-white drop-shadow-lg">Popüler Diziler</h2>
@@ -206,6 +225,11 @@ export default async function Home() {
               </div>
             </div>
           </section>
+        )}
+
+        {/* White Spacer */}
+        {popularTVShows.results.length > 0 && (
+          <div className="bg-white dark:bg-gray-900 h-4"></div>
         )}
 
         {/* En Yüksek Puanlı Diziler */}

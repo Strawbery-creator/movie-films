@@ -19,8 +19,8 @@ export default function RootLayout({
       <body className="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen transition-colors duration-200">
         <ThemeProvider>
           <nav className="bg-white dark:bg-gradient-to-r dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 shadow-lg">
-            <div className="container mx-auto px-3 md:px-4 py-2 md:py-3">
-              <div className="flex items-center justify-between gap-2 md:gap-4">
+            <div className="container mx-auto px-4 md:px-4 py-2.5 md:py-3">
+              <div className="flex items-center justify-between gap-3 md:gap-4">
                 {/* Hamburger Menu - Sadece mobilde görünür, logonun solunda */}
                 <div className="md:hidden flex-shrink-0">
                   <MobileMenu />
