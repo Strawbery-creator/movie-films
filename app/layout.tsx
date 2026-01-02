@@ -20,10 +20,10 @@ export default function RootLayout({
           <nav className="bg-white dark:bg-gradient-to-r dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 shadow-lg">
             <div className="container mx-auto px-4 py-3">
               <div className="flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4">
-                <a href="/" className="flex items-center gap-3 text-xl md:text-2xl font-bold text-primary-400 hover:text-primary-300 transition whitespace-nowrap group">
-                  <div className="relative">
-                    {/* Ultra Premium DİZİYOO Logo - Grafiker Tasarımı */}
-                    <svg className="w-14 h-14 md:w-16 md:h-16 transition-all group-hover:scale-110 group-hover:rotate-6 duration-500" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <a href="/" className="flex items-center gap-3 text-xl md:text-2xl font-bold text-primary-400 hover:text-primary-300 transition whitespace-nowrap group relative z-50">
+                  <div className="relative z-50">
+                    {/* Ultra Premium DİZİYOO Logo - Grafiker Tasarımı - Ön Planda */}
+                    <svg className="w-16 h-16 md:w-20 md:h-20 transition-all group-hover:scale-110 group-hover:rotate-6 duration-500 drop-shadow-2xl" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ filter: 'drop-shadow(0 0 20px rgba(79, 70, 229, 0.6)) drop-shadow(0 0 40px rgba(168, 85, 247, 0.4))', zIndex: 9999 }}>
                       <defs>
                         <linearGradient id="logoUltraGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                           <stop offset="0%" stopColor="#4f46e5" />
@@ -71,14 +71,17 @@ export default function RootLayout({
                       <circle cx="50" cy="50" r="32" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="0.8"/>
                       <circle cx="50" cy="50" r="28" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.5"/>
                     </svg>
-                    {/* Ultra premium animated pulse indicator */}
-                    <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-indigo-500 via-purple-500 via-pink-500 to-red-500 rounded-full animate-pulse shadow-2xl ring-3 ring-white/70 ring-offset-2 ring-offset-gray-900"></div>
-                    {/* Secondary glow dot */}
-                    <div className="absolute top-2 right-2 w-2 h-2 bg-white rounded-full opacity-60 animate-ping"></div>
+                    {/* Ultra premium animated pulse indicator - Daha belirgin */}
+                    <div className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-indigo-500 via-purple-500 via-pink-500 to-red-500 rounded-full animate-pulse shadow-2xl ring-4 ring-white/80 ring-offset-2 ring-offset-gray-900 z-50" style={{ filter: 'drop-shadow(0 0 10px rgba(79, 70, 229, 0.8))' }}></div>
+                    {/* Secondary glow dot - Daha belirgin */}
+                    <div className="absolute top-2 right-2 w-3 h-3 bg-white rounded-full opacity-80 animate-ping z-50" style={{ filter: 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.9))' }}></div>
                   </div>
-                  <span className="bg-gradient-to-r from-indigo-400 via-purple-500 via-pink-500 to-red-500 bg-clip-text text-transparent font-black tracking-tight drop-shadow-2xl text-3xl md:text-4xl relative">
-                    <span className="absolute inset-0 bg-gradient-to-r from-indigo-400 via-purple-500 via-pink-500 to-red-500 bg-clip-text text-transparent blur-sm opacity-50">DİZİYOO</span>
-                    <span className="relative">DİZİYOO</span>
+                  <span className="bg-gradient-to-r from-indigo-400 via-purple-500 via-pink-500 to-red-500 bg-clip-text text-transparent font-black tracking-tight drop-shadow-2xl text-4xl md:text-5xl relative z-50" style={{ 
+                    textShadow: '0 0 20px rgba(79, 70, 229, 0.5), 0 0 40px rgba(168, 85, 247, 0.3), 0 4px 8px rgba(0, 0, 0, 0.3)',
+                    filter: 'drop-shadow(0 0 15px rgba(79, 70, 229, 0.4))'
+                  }}>
+                    <span className="absolute inset-0 bg-gradient-to-r from-indigo-400 via-purple-500 via-pink-500 to-red-500 bg-clip-text text-transparent blur-sm opacity-60">DİZİYOO</span>
+                    <span className="relative z-10">DİZİYOO</span>
                   </span>
                 </a>
                 <div className="flex gap-3 md:gap-4 items-center text-sm md:text-base">
