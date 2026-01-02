@@ -102,14 +102,14 @@ export default function LatestTrailers() {
         </div>
 
         <div className="relative w-full px-6 md:px-8">
-            {/* Sol Ok Butonu - İçerik görselinde ortalanmış */}
+            {/* Sol Ok Butonu - Sadece desktop'ta görünür */}
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 e.preventDefault();
                 scroll('left');
               }}
-              className="absolute left-6 md:left-8 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 shadow-lg transition-all hover:scale-110 group"
+              className="hidden md:flex absolute left-6 md:left-8 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 shadow-lg transition-all hover:scale-110 group items-center justify-center"
               aria-label="Sol"
             >
               <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -117,14 +117,14 @@ export default function LatestTrailers() {
               </svg>
             </button>
 
-            {/* Sağ Ok Butonu - İçerik görselinde ortalanmış */}
+            {/* Sağ Ok Butonu - Sadece desktop'ta görünür */}
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 e.preventDefault();
                 scroll('right');
               }}
-              className="absolute right-6 md:right-8 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 shadow-lg transition-all hover:scale-110 group"
+              className="hidden md:flex absolute right-6 md:right-8 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 shadow-lg transition-all hover:scale-110 group items-center justify-center"
               aria-label="Sağ"
             >
               <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -211,7 +211,7 @@ export default function LatestTrailers() {
                       </div>
 
                       <Link href={url} className="block">
-                        <h3 className="text-white font-semibold text-lg line-clamp-1 group-hover:text-teal-400 transition drop-shadow-lg">
+                        <h3 className="text-white font-semibold text-xl line-clamp-1 group-hover:text-teal-400 transition drop-shadow-lg">
                           {trailer.title}
                         </h3>
                       </Link>

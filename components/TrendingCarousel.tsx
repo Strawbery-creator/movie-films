@@ -101,10 +101,14 @@ export default function TrendingCarousel({ trendingToday, trendingWeek }: Trendi
       </div>
 
       <div className="relative w-full px-6 md:px-8">
-        {/* Sol Ok Butonu - İçerik görselinde ortalanmış */}
+        {/* Sol Ok Butonu - Sadece desktop'ta görünür */}
         <button
-          onClick={() => scroll('left')}
-          className="absolute left-6 md:left-8 top-1/2 -translate-y-1/2 z-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 shadow-lg transition-all hover:scale-110 group"
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            scroll('left');
+          }}
+          className="hidden md:flex absolute left-6 md:left-8 top-1/2 -translate-y-1/2 z-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 shadow-lg transition-all hover:scale-110 group items-center justify-center"
           aria-label="Sol"
         >
           <svg className="w-6 h-6 text-white group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -112,10 +116,14 @@ export default function TrendingCarousel({ trendingToday, trendingWeek }: Trendi
           </svg>
         </button>
 
-        {/* Sağ Ok Butonu - İçerik görselinde ortalanmış */}
+        {/* Sağ Ok Butonu - Sadece desktop'ta görünür */}
         <button
-          onClick={() => scroll('right')}
-          className="absolute right-6 md:right-8 top-1/2 -translate-y-1/2 z-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 shadow-lg transition-all hover:scale-110 group"
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            scroll('right');
+          }}
+          className="hidden md:flex absolute right-6 md:right-8 top-1/2 -translate-y-1/2 z-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 shadow-lg transition-all hover:scale-110 group items-center justify-center"
           aria-label="Sağ"
         >
           <svg className="w-6 h-6 text-white group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -160,7 +168,7 @@ export default function TrendingCarousel({ trendingToday, trendingWeek }: Trendi
                 </div>
                 {/* Title Below Poster */}
                 <div className="px-1">
-                  <p className="text-white font-semibold text-sm line-clamp-1 group-hover:text-primary-400 transition">
+                  <p className="text-white font-semibold text-base line-clamp-1 group-hover:text-primary-400 transition">
                     {getItemTitle(item)}
                   </p>
                   <p className="text-gray-200 dark:text-gray-300 text-sm font-medium mt-1.5">{getItemDate(item)}</p>
