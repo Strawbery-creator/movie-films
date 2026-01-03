@@ -309,7 +309,7 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
             </h1>
             
             {/* Poster ve Bilgiler - Yan yana, dikeyde ortalanmış */}
-            <div className="flex flex-col md:flex-row items-center gap-6 mb-6">
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-6 mb-6">
               {/* Poster - Daha büyük */}
               <div className="flex-shrink-0 w-full md:w-auto">
                 <div className="relative w-48 md:w-64 h-72 md:h-[32rem] rounded-lg overflow-hidden shadow-2xl border-2 border-white/10">
@@ -324,7 +324,7 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
               </div>
               
               {/* Puanlama ve Diğer Bilgiler - Görselin sağında, dikeyde ortalanmış */}
-              <div className="flex flex-col gap-2.5 text-white w-full md:w-auto">
+              <div className="flex-1 flex flex-col justify-center gap-2.5 text-white w-full md:w-auto">
                 {/* Puanlama */}
                 <div className="flex items-center gap-2">
                   <span className="text-yellow-400 text-xl">⭐</span>

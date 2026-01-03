@@ -136,14 +136,35 @@ export default function TVFilters({ genres, onFilterChange, variant = 'green' }:
   useEffect(() => {
     const updatePositions = () => {
       const newPositions: { [key: string]: { top: number; left: number; width: number } | null } = {}
+      const viewportWidth = window.innerWidth
+      const isMobile = viewportWidth < 768
       
       Object.keys(buttonRefs).forEach((key) => {
         const buttonRef = buttonRefs[key as keyof typeof buttonRefs]
         if (expandedSections[key as keyof typeof expandedSections] && buttonRef.current) {
           const rect = buttonRef.current.getBoundingClientRect()
+          let left = rect.left + window.scrollX
+          
+          // Mobilde ekran dışına taşmaması için kontrol
+          if (isMobile) {
+            // Dropdown genişliği (mobilde max-w-[90vw])
+            const dropdownWidth = Math.min(viewportWidth * 0.9, 400)
+            const rightEdge = left + dropdownWidth
+            
+            // Eğer sağ taraf ekran dışına taşıyorsa, sola kaydır
+            if (rightEdge > viewportWidth) {
+              left = viewportWidth - dropdownWidth - 16 // 16px padding
+            }
+            
+            // Eğer sol taraf ekran dışına taşıyorsa, sağa hizala
+            if (left < 16) {
+              left = 16
+            }
+          }
+          
           newPositions[key] = {
             top: rect.bottom + window.scrollY + 8,
-            left: rect.left + window.scrollX,
+            left: left,
             width: rect.width,
           }
         } else {
