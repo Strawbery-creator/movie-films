@@ -352,7 +352,8 @@ export default function TVFilters({ genres, onFilterChange, variant = 'green' }:
                     </button>
                   ))}
                 </div>
-              </div>
+              </div>,
+              document.body
             )}
           </div>
 
@@ -558,7 +559,8 @@ export default function TVFilters({ genres, onFilterChange, variant = 'green' }:
                     </div>
                   </div>
                 </div>
-              </div>
+              </div>,
+              document.body
             )}
           </div>
 
@@ -658,7 +660,8 @@ export default function TVFilters({ genres, onFilterChange, variant = 'green' }:
                     />
                   </div>
                 </div>
-              </div>
+              </div>,
+              document.body
             )}
           </div>
 
@@ -779,7 +782,8 @@ export default function TVFilters({ genres, onFilterChange, variant = 'green' }:
                     </select>
                   </div>
                 </div>
-              </div>
+              </div>,
+              document.body
             )}
           </div>
           </div>
